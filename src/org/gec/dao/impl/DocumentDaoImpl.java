@@ -40,7 +40,7 @@ public class DocumentDaoImpl implements DocumentDao {
 
             //判断
             if (StringUtils.isNotBlank(doc.getTitle())) {
-                sql.append(" and title like '%").append(doc.getTitle()).append("%'");
+                sql.append(" where title like '%").append(doc.getTitle()).append("%'");
                 System.out.println("sql:" + sql);
             }
 

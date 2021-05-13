@@ -82,6 +82,29 @@ public class DocumentController extends HttpServlet {
             request.getRequestDispatcher("WEB-INF/jsp/document/documentlist.jsp").forward(request, response);
         }if (action.equals("documentsearch.action")) {
 
+            HttpSession session = request.getSession();
+            String titles = request.getParameter("title").trim();
+            System.out.println(titles);
+            User users = (User) session.getAttribute("user_session");
+            Integer user_id = users.getId();
+
+            String title = titles != null && !titles.equals("") ? titles.trim() : null;
+
+            //新建查询对象
+            Document doc = new Document(title);
+
+
+            //查询
+            List<Document> documentlist = service.findDocumentpage(doc);
+            System.out.println(documentlist);
+            List<User> user = service.findUser();
+
+            request.setAttribute("user", user);
+            request.setAttribute("documentlist", documentlist);
+            request.setAttribute("document", doc);
+//			request.setAttribute("pageModel", model);
+
+            request.getRequestDispatcher("WEB-INF/jsp/document/documentlist.jsp").forward(request, response);
         }if (action.equals("documentadd.action")) {
             showDocument(request, response);
         }
@@ -104,10 +127,7 @@ public class DocumentController extends HttpServlet {
 
     //上传
     protected void addDocument(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String title ="*";
-        if (request.getParameter("title")!=null){
-            request.getParameter("title");
-        }
+        String title = request.getParameter("title");
         String remark = request.getParameter("remark");
         Part part = request.getPart("file");
         String filename = part.getName();
