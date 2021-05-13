@@ -1,55 +1,44 @@
 ﻿/**
-* jQuery ligerUI 1.3.2
-* 
-* http://ligerui.com
-*  
-* Author daomi 2015 [ gd_star@163.com ] 
-* 
-*/
+ * jQuery ligerUI 1.3.2
+ *
+ * http://ligerui.com
+ *
+ * Author daomi 2015 [ gd_star@163.com ]
+ *
+ */
 
-(function ($)
-{
+(function ($) {
     //气泡,可以在制定位置显示
-    $.ligerTip = function (p)
-    {
+    $.ligerTip = function (p) {
         return $.ligerui.run.call(null, "ligerTip", arguments);
     };
 
     //在指定Dom Element右侧显示气泡
     //target：将ligerui对象ID附加上
-    $.fn.ligerTip = function (options)
-    {
-        this.each(function ()
-        {
+    $.fn.ligerTip = function (options) {
+        this.each(function () {
             var p = $.extend({}, $.ligerDefaults.ElementTip, options || {});
             p.target = p.target || this;
             //如果是自动模式：鼠标经过时显示，移开时关闭
-            if (p.auto || options == undefined)
-            {
-                if (!p.content)
-                {
+            if (p.auto || options == undefined) {
+                if (!p.content) {
                     p.content = this.title;
                     if (p.removeTitle)
                         $(this).removeAttr("title");
                 }
                 p.content = p.content || this.title;
-                $(this).bind('mouseover.tip', function ()
-                {
+                $(this).bind('mouseover.tip', function () {
                     p.x = $(this).offset().left + $(this).width() + (p.distanceX || 0);
                     p.y = $(this).offset().top + (p.distanceY || 0);
                     $.ligerTip(p);
-                }).bind('mouseout.tip', function ()
-                {
+                }).bind('mouseout.tip', function () {
 
                     var tipmanager = $.ligerui.managers[this.ligeruitipid];
-                    if (tipmanager)
-                    {
+                    if (tipmanager) {
                         tipmanager.remove();
                     }
                 });
-            }
-            else
-            {
+            } else {
                 if (p.target.ligeruitipid) return;
                 p.x = $(this).offset().left + $(this).width() + (p.distanceX || 0);
                 p.y = $(this).offset().top + (p.distanceY || 0);
@@ -61,34 +50,28 @@
         return $.ligerui.get(this, 'ligeruitipid');
     };
     //关闭指定在Dom Element(附加了ligerui对象ID,属性名"ligeruitipid")显示的气泡
-    $.fn.ligerHideTip = function (options)
-    {
-        return this.each(function ()
-        {
+    $.fn.ligerHideTip = function (options) {
+        return this.each(function () {
             var p = options || {};
-            if (p.isLabel == undefined)
-            {
+            if (p.isLabel == undefined) {
                 //如果是lable，将查找指定的input，并找到ligerui对象ID
                 p.isLabel = this.tagName.toLowerCase() == "label" && $(this).attr("for") != null;
             }
             var target = this;
-            if (p.isLabel)
-            {
+            if (p.isLabel) {
                 var forele = $("#" + $(this).attr("for"));
                 if (forele.length == 0) return;
                 target = forele[0];
             }
             var tipmanager = $.ligerui.managers[target.ligeruitipid];
-            if (tipmanager)
-            {
+            if (tipmanager) {
                 tipmanager.remove();
             }
         }).unbind('mouseover.tip').unbind('mouseout.tip');
     };
 
 
-    $.fn.ligerGetTipManager = function ()
-    {
+    $.fn.ligerGetTipManager = function () {
         return $.ligerui.get(this);
     };
 
@@ -123,66 +106,52 @@
 
     $.ligerMethos.Tip = {};
 
-    $.ligerui.controls.Tip = function (options)
-    {
+    $.ligerui.controls.Tip = function (options) {
         $.ligerui.controls.Tip.base.constructor.call(this, null, options);
     };
     $.ligerui.controls.Tip.ligerExtend($.ligerui.core.UIComponent, {
-        __getType: function ()
-        {
+        __getType: function () {
             return 'Tip';
         },
-        __idPrev: function ()
-        {
+        __idPrev: function () {
             return 'Tip';
         },
-        _extendMethods: function ()
-        {
+        _extendMethods: function () {
             return $.ligerMethos.Tip;
         },
-        _render: function ()
-        {
+        _render: function () {
             var g = this, p = this.options;
             var tip = $('<div class="l-verify-tip"><div class="l-verify-tip-corner"></div><div class="l-verify-tip-content"></div></div>');
             g.tip = tip;
             g.tip.attr("id", g.id);
-            if (p.content)
-            {
+            if (p.content) {
                 $("> .l-verify-tip-content:first", tip).html(p.content);
                 tip.appendTo('body');
-            }
-            else
-            {
+            } else {
                 return;
             }
-            tip.css({ left: p.x, top: p.y }).show();
+            tip.css({left: p.x, top: p.y}).show();
             p.width && $("> .l-verify-tip-content:first", tip).width(p.width - 8);
             p.height && $("> .l-verify-tip-content:first", tip).width(p.height);
             eee = p.appendIdTo;
-            if (p.appendIdTo)
-            {
+            if (p.appendIdTo) {
                 p.appendIdTo.attr("ligerTipId", g.id);
             }
-            if (p.target)
-            {
+            if (p.target) {
                 $(p.target).attr("ligerTipId", g.id);
                 p.target.ligeruitipid = g.id;
             }
             p.callback && p.callback(tip);
             g.set(p);
         },
-        _setContent: function (content)
-        {
+        _setContent: function (content) {
             $("> .l-verify-tip-content:first", this.tip).html(content);
         },
-        remove: function ()
-        {
-            if (this.options.appendIdTo)
-            {
+        remove: function () {
+            if (this.options.appendIdTo) {
                 this.options.appendIdTo.removeAttr("ligerTipId");
             }
-            if (this.options.target)
-            {
+            if (this.options.target) {
                 $(this.options.target).removeAttr("ligerTipId");
                 this.options.target.ligeruitipid = null;
             }

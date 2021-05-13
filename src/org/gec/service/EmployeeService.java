@@ -10,23 +10,25 @@ import org.gec.util.PageModel;
 
 public interface EmployeeService {
 
-	//查找全部用户
-			List<Employee> findEmployee(Employee emp, PageModel model);
+    //查找全部用户
+    List<Employee> findEmployee(Employee emp, PageModel model);
 
-			int getTotalCountByEmployee(Employee emp);
-		       
-			//添加用户
-			public boolean addEmployee(Employee emp);
+    int getTotalCountByEmployee(Employee emp);
 
-			//删除用户
-			public void deleteEmployee(String[] id);
+    //添加用户
+    public boolean addEmployee(Employee emp);
 
-			//修改
-			public void update(Employee emp);
+    //删除用户
+    public void deleteEmployee(String[] id);
 
-			List<Dept> findDept();
-			List<Job> findJob();
-			 String findCardId(String cardId);
+    //修改
+    public void update(Employee emp);
 
-			Employee findEmployees(Integer id);
+    List<Dept> findDept();
+
+    List<Job> findJob();
+
+    String findCardId(String cardId);
+
+    Employee findEmployees(Integer id);
 }

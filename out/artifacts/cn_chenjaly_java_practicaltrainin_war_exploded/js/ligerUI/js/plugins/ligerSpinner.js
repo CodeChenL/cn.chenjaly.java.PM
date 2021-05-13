@@ -1,19 +1,16 @@
 ﻿/**
-* jQuery ligerUI 1.3.2
-* 
-* http://ligerui.com
-*  
-* Author daomi 2015 [ gd_star@163.com ] 
-* 
-*/
-(function ($)
-{
-    $.fn.ligerSpinner = function ()
-    {
+ * jQuery ligerUI 1.3.2
+ *
+ * http://ligerui.com
+ *
+ * Author daomi 2015 [ gd_star@163.com ]
+ *
+ */
+(function ($) {
+    $.fn.ligerSpinner = function () {
         return $.ligerui.run.call(this, "ligerSpinner", arguments);
     };
-    $.fn.ligerGetSpinnerManager = function ()
-    {
+    $.fn.ligerGetSpinnerManager = function () {
         return $.ligerui.run.call(this, "ligerGetSpinnerManager", arguments);
     };
 
@@ -23,7 +20,7 @@
         decimalplace: 2,   //小数位 type=float时起作用
         step: 0.1,         //每次增加的值
         interval: 50,      //间隔，毫秒
-        value : null,
+        value: null,
         onChangeValue: false,    //改变值事件
         minValue: null,        //最小值
         maxValue: null,         //最大值
@@ -33,61 +30,48 @@
 
     $.ligerMethos.Spinner = {};
 
-    $.ligerui.controls.Spinner = function (element, options)
-    {
+    $.ligerui.controls.Spinner = function (element, options) {
         $.ligerui.controls.Spinner.base.constructor.call(this, element, options);
     };
     $.ligerui.controls.Spinner.ligerExtend($.ligerui.controls.Input, {
-        __getType: function ()
-        {
+        __getType: function () {
             return 'Spinner';
         },
-        __idPrev: function ()
-        {
+        __idPrev: function () {
             return 'Spinner';
         },
-        _extendMethods: function ()
-        {
+        _extendMethods: function () {
             return $.ligerMethos.Spinner;
         },
-        _init: function ()
-        {
+        _init: function () {
             $.ligerui.controls.Spinner.base._init.call(this);
             var p = this.options;
-            if (p.type == 'float')
-            {
+            if (p.type == 'float') {
                 p.step = 0.1;
                 p.interval = 50;
-            } else if (p.type == 'int')
-            {
+            } else if (p.type == 'int') {
                 p.step = 1;
                 p.interval = 100;
-            } else if (p.type == 'time')
-            {
+            } else if (p.type == 'time') {
                 p.step = 1;
                 p.interval = 100;
-            } else
-            {
+            } else {
                 p.type = "int";
                 p.step = 1;
                 p.interval = 100;
             }
         },
-        _render: function ()
-        {
+        _render: function () {
             var g = this, p = this.options;
             g.interval = null;
             g.inputText = null;
             g.value = null;
             g.textFieldID = "";
-            if (this.element.tagName.toLowerCase() == "input" && this.element.type && this.element.type == "text")
-            {
+            if (this.element.tagName.toLowerCase() == "input" && this.element.type && this.element.type == "text") {
                 g.inputText = $(this.element);
                 if (this.element.id)
                     g.textFieldID = this.element.id;
-            }
-            else
-            {
+            } else {
                 g.inputText = $('<input type="text"/>');
                 g.inputText.appendTo($(this.element));
             }
@@ -102,175 +86,144 @@
             g.link.down = $(".l-spinner-down", g.link);
             g.inputText.addClass("l-text-field");
 
-            if (p.disabled)
-            {
+            if (p.disabled) {
                 g.wrapper.addClass("l-text-disabled");
             }
             //初始化
-            if (!g._isVerify(g.inputText.val()))
-            {
+            if (!g._isVerify(g.inputText.val())) {
                 g.value = g._getDefaultValue();
                 g._showValue(g.value);
             }
             //事件
-            g.link.up.hover(function ()
-            {
+            g.link.up.hover(function () {
                 if (!p.disabled)
                     $(this).addClass("l-spinner-up-over");
-            }, function ()
-            {
+            }, function () {
                 clearInterval(g.interval);
                 $(document).unbind("selectstart.spinner");
                 $(this).removeClass("l-spinner-up-over");
-            }).mousedown(function ()
-            { 
-                if (!p.disabled)
-                {
+            }).mousedown(function () {
+                if (!p.disabled) {
                     g._uping.call(g);
-                    g.interval = setInterval(function ()
-                    {
+                    g.interval = setInterval(function () {
                         g._uping.call(g);
                     }, p.interval);
-                    $(document).bind("selectstart.spinner", function () { return false; });
+                    $(document).bind("selectstart.spinner", function () {
+                        return false;
+                    });
                 }
-            }).mouseup(function ()
-            {
+            }).mouseup(function () {
                 clearInterval(g.interval);
                 g.inputText.trigger("change").focus();
                 $(document).unbind("selectstart.spinner");
             });
-            g.link.down.hover(function ()
-            {
+            g.link.down.hover(function () {
                 if (!p.disabled)
                     $(this).addClass("l-spinner-down-over");
-            }, function ()
-            {
+            }, function () {
                 clearInterval(g.interval);
                 $(document).unbind("selectstart.spinner");
                 $(this).removeClass("l-spinner-down-over");
-            }).mousedown(function ()
-            {
-                if (!p.disabled)
-                {
-                    g.interval = setInterval(function ()
-                    {
+            }).mousedown(function () {
+                if (!p.disabled) {
+                    g.interval = setInterval(function () {
                         g._downing.call(g);
                     }, p.interval);
-                    $(document).bind("selectstart.spinner", function () { return false; });
+                    $(document).bind("selectstart.spinner", function () {
+                        return false;
+                    });
                 }
-            }).mouseup(function ()
-            {
+            }).mouseup(function () {
                 clearInterval(g.interval);
                 g.inputText.trigger("change").focus();
                 $(document).unbind("selectstart.spinner");
             });
 
-            g.inputText.change(function ()
-            {
+            g.inputText.change(function () {
                 var value = g.inputText.val();
                 g.value = g._getVerifyValue(value);
                 g.trigger('changeValue', [g.value]);
                 g._showValue(g.value);
-            }).blur(function ()
-            {
+            }).blur(function () {
                 g.wrapper.removeClass("l-text-focus");
-            }).focus(function ()
-            {
+            }).focus(function () {
                 g.wrapper.addClass("l-text-focus");
             });
-            g.wrapper.hover(function ()
-            {
+            g.wrapper.hover(function () {
                 if (!p.disabled)
                     g.wrapper.addClass("l-text-over");
-            }, function ()
-            {
+            }, function () {
                 g.wrapper.removeClass("l-text-over");
             });
             g.set(p);
         },
-        _setValue: function (value)
-        {
+        _setValue: function (value) {
             if (value != null)
                 this.inputText.val(value);
         },
-        _setWidth: function (value)
-        {
+        _setWidth: function (value) {
             var g = this;
-            if (value > 20)
-            {
-                g.wrapper.css({ width: value });
-                g.inputText.css({ width: value - 20 });
+            if (value > 20) {
+                g.wrapper.css({width: value});
+                g.inputText.css({width: value - 20});
             }
         },
-        _setHeight: function (value)
-        {
+        _setHeight: function (value) {
             var g = this;
-            if (value > 10)
-            {
+            if (value > 10) {
                 g.wrapper.height(value);
                 g.inputText.height(value - 2);
                 g.link.height(value - 4);
             }
         },
-        _setDisabled: function (value)
-        {
-            if (value)
-            {
+        _setDisabled: function (value) {
+            if (value) {
                 this.wrapper.addClass("l-text-disabled");
-            }
-            else
-            {
+            } else {
                 this.wrapper.removeClass("l-text-disabled");
             }
         },
-        _showValue: function (value)
-        {
+        _showValue: function (value) {
             var g = this, p = this.options;
             if (!value || value == "NaN") value = 0;
-            if (p.type == 'float')
-            {
+            if (p.type == 'float') {
                 value = parseFloat(value).toFixed(p.decimalplace);
             }
             this.inputText.val(value)
         },
-        _setValue: function (value)
-        {
+        _setValue: function (value) {
             this._showValue(value);
         },
-        setValue: function (value)
-        {
+        setValue: function (value) {
             this._showValue(value);
         },
-        getValue: function ()
-        {
+        getValue: function () {
             return this.inputText.val();
         },
-        _round: function (v, e)
-        {
+        _round: function (v, e) {
             var g = this, p = this.options;
             var t = 1;
-            for (; e > 0; t *= 10, e--) { }
-            for (; e < 0; t /= 10, e++) { }
+            for (; e > 0; t *= 10, e--) {
+            }
+            for (; e < 0; t /= 10, e++) {
+            }
             return Math.round(v * t) / t;
         },
-        _isInt: function (str)
-        {
+        _isInt: function (str) {
             var g = this, p = this.options;
             var strP = p.isNegative ? /^-?\d+$/ : /^\d+$/;
             if (!strP.test(str)) return false;
             if (parseFloat(str) != str) return false;
             return true;
         },
-        _isFloat: function (str)
-        {
+        _isFloat: function (str) {
             var g = this, p = this.options;
             var strP = p.isNegative ? /^-?\d+(\.\d+)?$/ : /^\d+(\.\d+)?$/;
             if (!strP.test(str)) return false;
             if (parseFloat(str) != str) return false;
             return true;
         },
-        _isTime: function (str)
-        {
+        _isTime: function (str) {
             var g = this, p = this.options;
             var a = str.match(/^(\d{1,2}):(\d{1,2})$/);
             if (a == null) return false;
@@ -278,76 +231,64 @@
             return true;
 
         },
-        _isVerify: function (str)
-        {
+        _isVerify: function (str) {
             var g = this, p = this.options;
-            if (p.type == 'float')
-            {
+            if (p.type == 'float') {
                 if (!g._isFloat(str)) return false;
                 var value = parseFloat(str);
                 if (p.minValue != undefined && p.minValue > value) return false;
                 if (p.maxValue != undefined && p.maxValue < value) return false;
                 return true;
-            } else if (p.type == 'int')
-            {
+            } else if (p.type == 'int') {
                 if (!g._isInt(str)) return false;
                 var value = parseInt(str);
                 if (p.minValue != undefined && p.minValue > value) return false;
                 if (p.maxValue != undefined && p.maxValue < value) return false;
                 return true;
-            } else if (p.type == 'time')
-            {
+            } else if (p.type == 'time') {
                 return g._isTime(str);
             }
             return false;
         },
-        _getVerifyValue: function (value)
-        {
+        _getVerifyValue: function (value) {
             var g = this, p = this.options;
             var newvalue = null;
-            if (p.type == 'float')
-            {
+            if (p.type == 'float') {
                 newvalue = g._round(value, p.decimalplace);
-            }
-            else if (p.type == 'int')
-            {
+            } else if (p.type == 'int') {
                 newvalue = parseInt(value);
-            } else if (p.type == 'time')
-            {
+            } else if (p.type == 'time') {
                 newvalue = value;
             }
-            if (!g._isVerify(newvalue))
-            {
+            if (!g._isVerify(newvalue)) {
                 return g.value;
-            } else
-            {
+            } else {
                 return newvalue;
             }
         },
-        _isOverValue: function (value)
-        {
+        _isOverValue: function (value) {
             var g = this, p = this.options;
             if (p.minValue != null && p.minValue > value) return true;
             if (p.maxValue != null && p.maxValue < value) return true;
             return false;
         },
-        _getDefaultValue: function ()
-        {
+        _getDefaultValue: function () {
             var g = this, p = this.options;
-            if (p.type == 'float' || p.type == 'int') { return 0; }
-            else if (p.type == 'time') { return "00:00"; }
+            if (p.type == 'float' || p.type == 'int') {
+                return 0;
+            } else if (p.type == 'time') {
+                return "00:00";
+            }
         },
-        _addValue: function (num)
-        {
-            var g = this, p = this.options; 
+        _addValue: function (num) {
+            var g = this, p = this.options;
             var value = g.inputText.val();
             value = parseFloat(value) + num;
             if (g._isOverValue(value)) return;
             g._showValue(value);
             g.inputText.trigger("change");
         },
-        _addTime: function (minute)
-        {
+        _addTime: function (minute) {
             var g = this, p = this.options;
             var value = g.inputText.val();
             var a = value.match(/^(\d{1,2}):(\d{1,2})$/);
@@ -358,30 +299,23 @@
             g._showValue(value);
             g.inputText.trigger("change");
         },
-        _uping: function ()
-        {
+        _uping: function () {
             var g = this, p = this.options;
-            if (p.type == 'float' || p.type == 'int')
-            {
+            if (p.type == 'float' || p.type == 'int') {
                 g._addValue(p.step);
-            } else if (p.type == 'time')
-            {
+            } else if (p.type == 'time') {
                 g._addTime(p.step);
             }
         },
-        _downing: function ()
-        {
+        _downing: function () {
             var g = this, p = this.options;
-            if (p.type == 'float' || p.type == 'int')
-            {
+            if (p.type == 'float' || p.type == 'int') {
                 g._addValue(-1 * p.step);
-            } else if (p.type == 'time')
-            {
+            } else if (p.type == 'time') {
                 g._addTime(-1 * p.step);
             }
         },
-        _isDateTime: function (dateStr)
-        {
+        _isDateTime: function (dateStr) {
             var g = this, p = this.options;
             var r = dateStr.match(/^(\d{1,4})(-|\/)(\d{1,2})\2(\d{1,2})$/);
             if (r == null) return false;
@@ -389,8 +323,7 @@
             if (d == "NaN") return false;
             return (d.getFullYear() == r[1] && (d.getMonth() + 1) == r[3] && d.getDate() == r[4]);
         },
-        _isLongDateTime: function (dateStr)
-        {
+        _isLongDateTime: function (dateStr) {
             var g = this, p = this.options;
             var reg = /^(\d{1,4})(-|\/)(\d{1,2})\2(\d{1,2}) (\d{1,2}):(\d{1,2})$/;
             var r = dateStr.match(reg);

@@ -1,13 +1,12 @@
 ﻿/**
-* jQuery ligerUI 1.3.2
-* 
-* http://ligerui.com
-*  
-* Author daomi 2015 [ gd_star@163.com ] 
-* 
-*/
-(function ($)
-{
+ * jQuery ligerUI 1.3.2
+ *
+ * http://ligerui.com
+ *
+ * Author daomi 2015 [ gd_star@163.com ]
+ *
+ */
+(function ($) {
     /*
     以html的方式加载组件
     程序会查询以 liger-插件名 类名的Dom,从dom加载相应的参数并调用插件
@@ -106,8 +105,7 @@
             CheckBoxList: {
                 dynamics: 'data,parms'
             },
-            Panel: {
-            },
+            Panel: {},
             Portal: {
                 //动态
                 dynamics: 'rows,columns',
@@ -129,25 +127,20 @@
             }
         },
 
-        parse: function (code)
-        {
-            try
-            {
+        parse: function (code) {
+            try {
                 if (code == null) return null;
                 return new Function("return " + code + ";")();
-            } catch (e)
-            {
+            } catch (e) {
                 return null;
             }
         },
 
-        parseDefault: function (value)
-        {
+        parseDefault: function (value) {
             var g = this;
             if (!value) return value;
             var result = {};
-            $(value.split(',')).each(function (index, name)
-            {
+            $(value.split(',')).each(function (index, name) {
                 if (!name) return;
                 name = name.substr(0, 1).toUpperCase() + name.substr(1);
                 $.extend(result, g.parse("liger.defaults." + name));
@@ -155,8 +148,7 @@
             return result;
         },
 
-        fotmatValue: function (value, type)
-        {
+        fotmatValue: function (value, type) {
             if (type == "boolean")
                 return value == "true" || value == "1";
             if (type == "number" && value)
@@ -164,8 +156,7 @@
             return value;
         },
 
-        getOptions: function (e)
-        {
+        getOptions: function (e) {
             var jelement = e.jelement, defaults = e.defaults, config = e.config;
             config = $.extend({
                 ignores: "",
@@ -174,28 +165,24 @@
             }, config);
             var g = this, options = {}, value;
             if (config.textProperty) options[config.textProperty] = jelement.text();
-            for (var proName in defaults)
-            {
+            for (var proName in defaults) {
                 var className = proName.toLowerCase();
                 var subElement = $("> ." + className, jelement);
                 //忽略
                 if ($.inArray(proName, config.ignores.split(',')) != -1) continue;
                 //判断子节点 (复杂属性) 
-                if (subElement.length)
-                {
+                if (subElement.length) {
                     var defaultName = e.controlName + "_" + proName;
-                    var subDefaults = g.defaults[defaultName] || liger.defaults[defaultName], subConfig = config[proName];
+                    var subDefaults = g.defaults[defaultName] || liger.defaults[defaultName],
+                        subConfig = config[proName];
                     if (typeof (subDefaults) == "string") subDefaults = g.parseDefault(subDefaults);
                     else if (typeof (subDefaults) == "funcion") subDefaults = subDefaults();
                     if (typeof (subConfig) == "string") subConfig = g.parse(subConfig);
                     else if (typeof (subConfig) == "funcion") subConfig = subConfig();
-                    if (subDefaults)
-                    {
-                        if ($.inArray(proName, config.arrays.split(',')) != -1)
-                        {
+                    if (subDefaults) {
+                        if ($.inArray(proName, config.arrays.split(',')) != -1) {
                             value = [];
-                            $(">div,>li,>input", subElement).each(function ()
-                            {
+                            $(">div,>li,>input", subElement).each(function () {
                                 value.push(g.getOptions({
                                     defaults: subDefaults,
                                     controlName: e.controlName,
@@ -204,8 +191,7 @@
                                 }));
                             });
                             options[proName] = value;
-                        } else
-                        {
+                        } else {
                             options[proName] = g.getOptions({
                                 defaults: subDefaults,
                                 controlName: e.controlName,
@@ -216,21 +202,17 @@
                     }
                     subElement.remove();
                 }
-                    //动态值
-                else if ($.inArray(proName, config.dynamics.split(',')) != -1 || proName.indexOf('on') == 0)
-                {
+                //动态值
+                else if ($.inArray(proName, config.dynamics.split(',')) != -1 || proName.indexOf('on') == 0) {
                     value = g.parse(jelement.attr("data-" + proName) || jelement.attr(proName));
-                    if (value)
-                    {
+                    if (value) {
                         options[proName] = g.fotmatValue(value, typeof (defaults[proName]));
                     }
                 }
-                    //默认处理
-                else
-                {
+                //默认处理
+                else {
                     value = jelement.attr("data-" + proName) || jelement.attr(proName);
-                    if (value)
-                    {
+                    if (value) {
                         options[proName] = g.fotmatValue(value, typeof (defaults[proName]));
                     }
                 }
@@ -241,22 +223,17 @@
             return options;
         },
 
-        init: function ()
-        {
+        init: function () {
             var g = this, configs = this.config;
-            for (var name in g.defaults)
-            {
-                if (typeof (g.defaults[name]) == "string")
-                {
+            for (var name in g.defaults) {
+                if (typeof (g.defaults[name]) == "string") {
                     g.defaults[name] = g.parseDefault(g.defaults[name]);
                 }
             }
-            for (var controlName in liger.controls)
-            {
+            for (var controlName in liger.controls) {
                 var config = configs[controlName] || {};
                 var className = g.prev + controlName.toLowerCase();
-                $("." + className).each(function ()
-                {
+                $("." + className).each(function () {
                     var jelement = $(this), value;
                     var defaults = $.extend({
                         onrender: null,
@@ -275,8 +252,7 @@
 
     }
 
-    $(function ()
-    {
+    $(function () {
         liger.inject.init();
     });
 

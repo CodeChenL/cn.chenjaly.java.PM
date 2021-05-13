@@ -10,41 +10,42 @@ import org.gec.service.JobService;
 import org.gec.util.PageModel;
 
 public class JobServiceImpl implements JobService {
-      JobDao dao=new JobDaoImpl();
-	@Override
-	public List<Job> findJob(Job job, PageModel model) {
-		// TODO Auto-generated method stub
-		return dao.findJob(job, model);
-	}
+    JobDao dao = new JobDaoImpl();
 
-	@Override
-	public boolean addJob(Job job) {
-		// TODO Auto-generated method stub
-		return dao.addJob(job);
-	}
+    @Override
+    public List<Job> findJob(Job job, PageModel model) {
+        // TODO Auto-generated method stub
+        return dao.findJob(job, model);
+    }
 
-	@Override
-	public void updateJob(Job job) {
-		// TODO Auto-generated method stub
-		dao.updateJob(job);
-	}
+    @Override
+    public boolean addJob(Job job) {
+        // TODO Auto-generated method stub
+        return dao.addJob(job);
+    }
 
-	@Override
-	public void deleteJob(String[] id) {
-		// TODO Auto-generated method stub
-		dao.deleteJob(id);
-	}
+    @Override
+    public void updateJob(Job job) {
+        // TODO Auto-generated method stub
+        dao.updateJob(job);
+    }
 
-	@Override
-	public int getTotalCountByJob(Job job) {
-		// TODO Auto-generated method stub
-		return dao.getTotalCountByJob(job);
-	}
+    @Override
+    public void deleteJob(String[] id) {
+        // TODO Auto-generated method stub
+        dao.deleteJob(id);
+    }
 
-	@Override
-	public Job findJob(Integer id) {
-		// TODO Auto-generated method stub
-		return dao.findJob(id);
-	}
+    @Override
+    public int getTotalCountByJob(Job job) {
+        // TODO Auto-generated method stub
+        return dao.getTotalCountByJob(job);
+    }
+
+    @Override
+    public Job findJob(Integer id) {
+        // TODO Auto-generated method stub
+        return dao.findJob(id);
+    }
 
 }

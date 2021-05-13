@@ -5,47 +5,63 @@ var icon_war = '/metronic/assets/img/eap/war.gif';
 var icon_service = '/metronic/assets/img/eap/sca_spring.gif';
 var icon_workflow = '/metronic/assets/img/eap/workflow_16.gif';
 
-var indexdata = 
-	   [{ text: 'openEAP', isexpand:true, children: [
-	       	{ text: '·þÎñÆ÷', url:'servers.html', isexpand:false, children: [
-	   			{url:'server.html',text:'³µ¹ÜËùÏîÄ¿', icon: icon_server},
-	   			{url:'server.html',text:'ÊµÕ½Æ½Ì¨ÏîÄ¿', icon: icon_server}
-	   		]},
-	   		{ text: '¼¯Èº', url:''},
-	   		{ text: '²¿Êð', isexpand:false, children: [
-	   			{url:'/demo/page/cmdb/org/roles.htm',text:'Ó¦ÓÃ', icon: icon_war},
-	   			{url:'/demo/page/cmdb/org/roles.htm',text:'Æô¶¯ & Í£Ö¹', icon: icon_war}
-	   		]},
-	   		{ text: '·þÎñ', isexpand:false, children: [
-	   		   {url:'/demo/page/cmdb/org/roles.htm',text:'Ó¦ÓÃ', icon: icon_service},
-	   		   {url:'/demo/page/cmdb/org/roles.htm',text:'Æô¶¯ & Í£Ö¹'}
-	   		]},
-	   		{ text: '°²È«', isexpand:false, children: [
-  	   		   {url:'/demo/page/cmdb/org/roles.htm',text:'Ó¦ÓÃ'},
-  	   		   {url:'/demo/page/cmdb/org/roles.htm',text:'Æô¶¯ & Í£Ö¹'}
-  	   		]},
-	   		{ text: 'ÈÕÖ¾', isexpand:false, children: [
-  	   		   {url:'/demo/page/cmdb/org/roles.htm',text:'Ó¦ÓÃ'},
-  	   		   {url:'/demo/page/cmdb/org/roles.htm',text:'Æô¶¯ & Í£Ö¹'}
-  	   		]},
-	   		{ text: 'Á÷³Ì', isexpand:false, children: [
-  	   		   {url:'/demo/page/cmdb/org/roles.htm',text:'Ó¦ÓÃ', icon: icon_workflow},
-  	   		   {url:'/demo/page/cmdb/org/roles.htm',text:'Æô¶¯ & Í£Ö¹', icon: icon_workflow}
-  	   		]},
-	   		{ text: 'ÐÔÄÜ', isexpand:false, children: [
- 	   		   {url:'/demo/page/cmdb/org/roles.htm',text:'Ó¦ÓÃ', icon: icon_perf},
- 	   		   {url:'/demo/page/cmdb/org/roles.htm',text:'Æô¶¯ & Í£Ö¹', icon: icon_perf}
- 	   		]}
-	   	]}
-	   ];
-   $('#tree').ligerTree({
-       data : indexdata,
-       checkbox: false,
-       slide: false,
-       nodeWidth: 114,
-       attribute: ['nodename', 'url'],
-       onSelect: function (node) {
-           if (!node.data.url) return;
-           $("#frame").attr("src", node.data.url);
-       }
-   });
+var indexdata =
+    [{
+        text: 'openEAP', isexpand: true, children: [
+            {
+                text: 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', url: 'servers.html', isexpand: false, children: [
+                    {url: 'server.html', text: 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿', icon: icon_server},
+                    {url: 'server.html', text: 'ÊµÕ½Æ½Ì¨ï¿½ï¿½Ä¿', icon: icon_server}
+                ]
+            },
+            {text: 'ï¿½ï¿½Èº', url: ''},
+            {
+                text: 'ï¿½ï¿½ï¿½ï¿½', isexpand: false, children: [
+                    {url: '/demo/page/cmdb/org/roles.htm', text: 'Ó¦ï¿½ï¿½', icon: icon_war},
+                    {url: '/demo/page/cmdb/org/roles.htm', text: 'ï¿½ï¿½ï¿½ï¿½ & Í£Ö¹', icon: icon_war}
+                ]
+            },
+            {
+                text: 'ï¿½ï¿½ï¿½ï¿½', isexpand: false, children: [
+                    {url: '/demo/page/cmdb/org/roles.htm', text: 'Ó¦ï¿½ï¿½', icon: icon_service},
+                    {url: '/demo/page/cmdb/org/roles.htm', text: 'ï¿½ï¿½ï¿½ï¿½ & Í£Ö¹'}
+                ]
+            },
+            {
+                text: 'ï¿½ï¿½È«', isexpand: false, children: [
+                    {url: '/demo/page/cmdb/org/roles.htm', text: 'Ó¦ï¿½ï¿½'},
+                    {url: '/demo/page/cmdb/org/roles.htm', text: 'ï¿½ï¿½ï¿½ï¿½ & Í£Ö¹'}
+                ]
+            },
+            {
+                text: 'ï¿½ï¿½Ö¾', isexpand: false, children: [
+                    {url: '/demo/page/cmdb/org/roles.htm', text: 'Ó¦ï¿½ï¿½'},
+                    {url: '/demo/page/cmdb/org/roles.htm', text: 'ï¿½ï¿½ï¿½ï¿½ & Í£Ö¹'}
+                ]
+            },
+            {
+                text: 'ï¿½ï¿½ï¿½ï¿½', isexpand: false, children: [
+                    {url: '/demo/page/cmdb/org/roles.htm', text: 'Ó¦ï¿½ï¿½', icon: icon_workflow},
+                    {url: '/demo/page/cmdb/org/roles.htm', text: 'ï¿½ï¿½ï¿½ï¿½ & Í£Ö¹', icon: icon_workflow}
+                ]
+            },
+            {
+                text: 'ï¿½ï¿½ï¿½ï¿½', isexpand: false, children: [
+                    {url: '/demo/page/cmdb/org/roles.htm', text: 'Ó¦ï¿½ï¿½', icon: icon_perf},
+                    {url: '/demo/page/cmdb/org/roles.htm', text: 'ï¿½ï¿½ï¿½ï¿½ & Í£Ö¹', icon: icon_perf}
+                ]
+            }
+        ]
+    }
+    ];
+$('#tree').ligerTree({
+    data: indexdata,
+    checkbox: false,
+    slide: false,
+    nodeWidth: 114,
+    attribute: ['nodename', 'url'],
+    onSelect: function (node) {
+        if (!node.data.url) return;
+        $("#frame").attr("src", node.data.url);
+    }
+});

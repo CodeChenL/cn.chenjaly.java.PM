@@ -13,62 +13,63 @@ import org.gec.util.PageModel;
 
 public class EmployeeServiceImpl implements EmployeeService {
 
-	 EmployeeDao dao=new EmployeeDaoImpl();
-	@Override
-	public List<Employee> findEmployee(Employee emp, PageModel model) {
-		// TODO Auto-generated method stub
-		return dao.findEmployee(emp, model);
-	}
+    EmployeeDao dao = new EmployeeDaoImpl();
 
-	@Override
-	public int getTotalCountByEmployee(Employee emp) {
-		// TODO Auto-generated method stub
-		return dao.getTotalCountByEmployee(emp);
-	}
+    @Override
+    public List<Employee> findEmployee(Employee emp, PageModel model) {
+        // TODO Auto-generated method stub
+        return dao.findEmployee(emp, model);
+    }
 
-	@Override
-	public boolean addEmployee(Employee emp) {
-		// TODO Auto-generated method stub
-		return dao.addEmployee(emp);
-	}
+    @Override
+    public int getTotalCountByEmployee(Employee emp) {
+        // TODO Auto-generated method stub
+        return dao.getTotalCountByEmployee(emp);
+    }
 
-	@Override
-	public void deleteEmployee(String[] id) {
-		// TODO Auto-generated method stub
+    @Override
+    public boolean addEmployee(Employee emp) {
+        // TODO Auto-generated method stub
+        return dao.addEmployee(emp);
+    }
 
-		dao.deleteEmployee(id);
-	}
+    @Override
+    public void deleteEmployee(String[] id) {
+        // TODO Auto-generated method stub
 
-	@Override
-	public void update(Employee emp) {
-		// TODO Auto-generated method stub
+        dao.deleteEmployee(id);
+    }
 
-		dao.update(emp);
-	}
+    @Override
+    public void update(Employee emp) {
+        // TODO Auto-generated method stub
 
-	@Override
-	public Employee findEmployees(Integer id) {
-		// TODO Auto-generated method stub
-		return dao.findEmployees(id);
-	}
+        dao.update(emp);
+    }
 
-	
-	@Override
-	public List<Dept> findDept() {
-		// TODO Auto-generated method stub
-		return dao.findDept();
-	}
+    @Override
+    public Employee findEmployees(Integer id) {
+        // TODO Auto-generated method stub
+        return dao.findEmployees(id);
+    }
 
-	@Override
-	public List<Job> findJob() {
-		// TODO Auto-generated method stub
-		return dao.findJob();
-	}
 
-	@Override
-	public String findCardId(String cardId) {
-		// TODO Auto-generated method stub
-		return dao.findCardId(cardId);
-	}
+    @Override
+    public List<Dept> findDept() {
+        // TODO Auto-generated method stub
+        return dao.findDept();
+    }
+
+    @Override
+    public List<Job> findJob() {
+        // TODO Auto-generated method stub
+        return dao.findJob();
+    }
+
+    @Override
+    public String findCardId(String cardId) {
+        // TODO Auto-generated method stub
+        return dao.findCardId(cardId);
+    }
 
 }

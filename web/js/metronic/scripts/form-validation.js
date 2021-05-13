@@ -71,7 +71,7 @@ var FormValidation = function () {
                 success: function (label) {
                     label
                         .addClass('valid').addClass('help-inline ok') // mark the current input as valid and display OK icon
-                    .closest('.control-group').removeClass('error').addClass('success'); // set success class to the control group
+                        .closest('.control-group').removeClass('error').addClass('success'); // set success class to the control group
                 },
 
                 submitHandler: function (form) {
@@ -165,7 +165,7 @@ var FormValidation = function () {
                     } else { // display success icon for other inputs
                         label
                             .addClass('valid').addClass('help-inline ok') // mark the current input as valid and display OK icon
-                        .closest('.control-group').removeClass('error').addClass('success'); // set success class to the control group
+                            .closest('.control-group').removeClass('error').addClass('success'); // set success class to the control group
                     }
                 },
 
