@@ -118,7 +118,7 @@
             <table width="100%" border="0" cellpadding="0" cellspacing="10" class="main_tab">
                 <tr>
                     <td class="fftd">
-                        <form name="documentform" method="post" id="documentform" action="${ctx }/documentsearch.action">
+                        <form name="documentform" method="post" id="documentform" action="${ctx }/documentlist.action">
                             <table width="100%" border="0" cellpadding="0" cellspacing="0">
                                 <tr>
                                     <td class="font3">

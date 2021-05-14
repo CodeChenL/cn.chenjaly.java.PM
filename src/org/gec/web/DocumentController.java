@@ -60,7 +60,7 @@ public class DocumentController extends HttpServlet {
         //判断
         if (action.equals("documentlist.action")) {
             HttpSession session = request.getSession();
-            String titles = (String) request.getAttribute("title");
+            String titles = request.getParameter("title");
             User users = (User) session.getAttribute("user_session");
             Integer user_id = users.getId();
 
@@ -83,7 +83,7 @@ public class DocumentController extends HttpServlet {
         }if (action.equals("documentsearch.action")) {
 
             HttpSession session = request.getSession();
-            String titles = request.getParameter("title").trim();
+            String titles = request.getParameter("title");
             System.out.println(titles);
             User users = (User) session.getAttribute("user_session");
             Integer user_id = users.getId();
@@ -150,8 +150,7 @@ public class DocumentController extends HttpServlet {
         } catch (Exception e) {
             // TODO: handle exception
         }
-        request.getRequestDispatcher("/documentlist.action").forward(request, response);
-        //response.sendRedirect("documentlist.action");
+        response.sendRedirect("documentlist.action");
     }
 
     //修改
